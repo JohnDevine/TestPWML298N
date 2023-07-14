@@ -1,7 +1,7 @@
 #ifndef JD_GLOBAL_H
 #define JD_GLOBAL_H
 
-#define JD_GLOBAL_VERSION 2
+#define JD_GLOBAL_VERSION 3
 
 #ifndef Arduino_h
     #include <Arduino.h>
@@ -35,17 +35,20 @@ Set this value to 0 to disable all the traces at once.
 #ifdef ESP8266_CLOCK // ESP8266
     // Wemos D1 Mini Lite
     // See https://docs.wemos.cc/en/latest/d1/d1_mini_lite.html
-    #define ESP8266_LED_BUILTIN 2 // Pin D4 mapped to pin GPIO2 of esp8266, control on-board LED
+    // and https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
+    #define ESP8266_LED_BUILTIN 2 // Pin D4 mapped to pin GPIO2 of esp8266, control on-board LED The LED works with inverted logic. Send a HIGH signal to turn it off, and a LOW signal to turn it on.
 
-    #define PIN_D0 16 // Pin D0 mapped to pin GPIO16
+    #define PIN_D0 16 // Pin D0 mapped to pin GPIO16  //no PWM or I2C support, HIGH at boot used to wake up from deep sleep
     #define PIN_D1 5  // Pin D1mapped to pin GPIO5                  //SCL
     #define PIN_D2 4  // Pin D2 mapped to pin GPIO4                 //SDA
-    #define PIN_D3 0  // Pin D3 mapped to pin GPIO0                 // 10k Pullup
-    #define PIN_D4 2  // Pin D4 mapped to pin GPIO2                 //Builtin LED
+    #define PIN_D3 0  // Pin D3 mapped to pin GPIO0   //connected to FLASH button, boot fails if pulled LOW, 10k Pullup
+    #define PIN_D4 2  // Pin D4 mapped to pin GPIO2                 //HIGH at boot connected to on-board LED, boot fails if pulled LOW
     #define PIN_D5 14 // Pin D5 mapped to pin GPIO14                //SCK
     #define PIN_D6 12 // Pin D6 mapped to pin GPIO12                //MISO
     #define PIN_D7 13 // Pin D7 mapped to pin GPIO13                //MOSI
-    #define PIN_D8 15 // Pin D8 mapped to pin GPIO15                // 10k Pull down, SS
+    #define PIN_D8 15 // Pin D8 mapped to pin GPIO15                //Boot fails if pulled HIGH, 10k Pull down, SS
+    #define PIN_TX 1  // TX pin mapped to pin GPIO01  //HIGH at boot debug output at boot, boot fails if pulled LOW
+    #define PIN_RX 3  // RX pin mapped to pin GPIO03  //HIGH at boot
 
 #endif
 
